@@ -5,7 +5,7 @@ COPY src /build/src
 
 RUN mvn -q clean package -DskipTests
 
-FROM eclipse-temurin:17-jre-ubi9-minimal
+FROM eclipse-temurin:17.0.13_11-jre-focal
 WORKDIR /opt/app
 RUN addgroup --system javauser && adduser -S -s /usr/sbin/nologin -G javauser javauser
 COPY --from=builder /build/target/*.jar app.jar
