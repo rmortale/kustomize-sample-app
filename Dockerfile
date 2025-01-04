@@ -1,11 +1,11 @@
-FROM maven:3.9.9-eclipse-temurin-17 AS builder
+FROM maven:3.9.9-eclipse-temurin-17-focal AS builder
 WORKDIR /build
 COPY pom.xml /build/
 COPY src /build/src
 
 RUN mvn -q clean package -DskipTests
 
-FROM eclipse-temurin:17.0.13_11-jre-alpine
+FROM eclipse-temurin:17-jre-ubi9-minimal
 WORKDIR /opt/app
 RUN addgroup --system javauser && adduser -S -s /usr/sbin/nologin -G javauser javauser
 COPY --from=builder /build/target/*.jar app.jar
